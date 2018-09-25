@@ -2,6 +2,7 @@ import datetime
 import re
 import json
 import requests
+import zlib
 from lxml import etree
 from event_result import EventResult
 
@@ -19,9 +20,10 @@ class Feed(object):
         return best_odds
 
     def get_sports(self):
-        url = "http://odds.smarkets.com/oddsfeed.xml"
+        url = "https://odds.smarkets.com/oddsfeed.xml.gz"
         r = requests.get(url)
-        content = r.content.decode("utf-8")
+
+        content = zlib.decompress(r.content, zlib.MAX_WBITS|32)
         root = etree.fromstring(content)
         event_nodes = root.xpath('/event')
         result = []
