@@ -25,7 +25,7 @@ class Feed(object):
 
         content = zlib.decompress(r.content, zlib.MAX_WBITS|32)
         root = etree.fromstring(content)
-        event_nodes = root.xpath('/event')
+        event_nodes = root.xpath('/odds/event')
         result = []
         for event_node in event_nodes:
             event_name = event_node.attrib["name"]
@@ -51,3 +51,4 @@ class Feed(object):
                 else:
                     er.add_odds(name, odds, False)
             result.append(er)
+        return result
