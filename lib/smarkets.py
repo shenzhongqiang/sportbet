@@ -11,12 +11,12 @@ class Feed(object):
         pass
 
     def get_odds(self, contract_node):
-        price_nodes = contract_node.xpath('./bids/price')
-        best_odds = float("inf")
+        price_nodes = contract_node.xpath('./offers/price')
+        options = []
         for price_node in price_nodes:
             odds = float(price_node.attrib["decimal"])
-            if odds < best_odds:
-                best_odds = odds
+            options.append(odds)
+        best_odds = max(options)
         return best_odds
 
     def get_sports(self):
@@ -37,12 +37,16 @@ class Feed(object):
             er = EventResult(parent_name)
             market_nodes = event_node.xpath('./market[@slug="winner"]')
             if len(market_nodes) == 0:
-                print("no markets for {}".format(name))
+                print("no markets for {}".format(event_name))
                 continue
             market_node = market_nodes[0]
             contract_nodes = market_node.xpath('./contract')
             for contract_node in contract_nodes:
                 name = contract_node.get("name", "")
+                price_nodes = contract_node.xpath('./offers/price')
+                if len(price_nodes) == 0:
+                    print("no offers for {}".format(name))
+                    continue
                 is_draw = name == "Draw"
                 odds = self.get_odds(contract_node)
                 er.set_time(dt)
