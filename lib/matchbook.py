@@ -10,13 +10,14 @@ class Feed(object):
     def __init__(self):
         pass
 
-    def get_odds(self, contract_node):
-        price_nodes = contract_node.xpath('./bids/price')
-        best_odds = float("inf")
+    def get_odds(self, price_nodes):
+        options = []
         for price_node in price_nodes:
-            odds = float(price_node.attrib["decimal"])
-            if odds < best_odds:
-                best_odds = odds
+            if price_node["side"] != "win":
+                continue
+            odds = float(price_node["decimal-odds"])
+            options.append(odds)
+        best_odds = max(options)
         return best_odds
 
     def get_sports(self):
@@ -25,14 +26,13 @@ class Feed(object):
         content = r.content.decode("utf-8")
         root = json.loads(content)
         total = root["total"]
-        per_page = 20
+        per_page = 100
         num_page = math.ceil(total/per_page)
         result = []
         for i in range(num_page):
             offset = per_page * i
             page_result = self.get_sports_per_page(offset, per_page)
             result.extend(page_result)
-            break
         return result
 
     def get_sports_per_page(self, offset, per_page):
@@ -47,14 +47,27 @@ class Feed(object):
         print(per_page, offset, total)
         result = []
         for event in events:
-            markets = event["markets"]
-            for market in markets:
-            market_type = event["market-type"]
-            if market_type != "money_line":
-                continue
-            print(json.dumps(event, indent=4))
+            event_name = event["name"]
             start = event["start"]
             status = event["status"]
             dt = datetime.datetime.strptime(start, "%Y-%m-%dT%H:%M:%S.%fZ")
-            result.append(er)
-
+            er = EventResult(event_name)
+            er.set_time(dt)
+            markets = event["markets"]
+            for market in markets:
+                market_type = market["market-type"]
+                if market_type != "money_line" and market_type != "one_x_two":
+                    continue
+                runners = market["runners"]
+                for runner in runners:
+                    name = runner["name"]
+                    price_nodes = list(filter(lambda x: x["side"] == "win", runner["prices"]))
+                    if len(price_nodes) == 0:
+                        continue
+                    odds = self.get_odds(price_nodes)
+                    if re.match(r"DRAW", name, re.I):
+                        er.add_odds("", odds, True)
+                    else:
+                        er.add_odds(name, odds, False)
+                result.append(er)
+        return result

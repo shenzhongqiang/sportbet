@@ -31,3 +31,9 @@ class EventResult(object):
 
         str_odds = "[" + str_odds + "]"
         return '<EventResult league="{}" time="{}" teams={} odds={}>'.format(self.league, self.time, str_teams, str_odds)
+
+class HandicapResult(object):
+    pass
+
+class TotalResult(object):
+    pass
