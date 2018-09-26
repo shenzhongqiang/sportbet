@@ -1,9 +1,9 @@
 import unittest
-import lib.hkjc
+import betdata.hkjc
 
 class Test(unittest.TestCase):
     def setUp(self):
-        self.inst = lib.hkjc.Feed()
+        self.inst = betdata.hkjc.Feed()
 
     def tearDown(self):
         pass

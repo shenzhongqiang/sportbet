@@ -1,9 +1,9 @@
 import unittest
-import lib.smarkets
+import betdata.smarkets
 
 class Test(unittest.TestCase):
     def setUp(self):
-        self.inst = lib.smarkets.Feed()
+        self.inst = betdata.smarkets.Feed()
 
     def tearDown(self):
         pass

@@ -1,9 +1,9 @@
 import unittest
-import lib.bookmaker
+import betdata.bookmaker
 
 class Test(unittest.TestCase):
     def setUp(self):
-        self.inst = lib.bookmaker.Feed()
+        self.inst = betdata.bookmaker.Feed()
 
     def tearDown(self):
         pass
