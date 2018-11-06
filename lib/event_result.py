@@ -32,8 +32,23 @@ class EventResult(object):
         str_odds = "[" + str_odds + "]"
         return '<EventResult league="{}" time="{}" teams={} odds={}>'.format(self.league, self.time, str_teams, str_odds)
 
-class HandicapResult(object):
-    pass
+class Match(object):
+    def __init__(self, league, team_home, team_away, handicap, home_win, away_win, draw, time):
+        self.league = league
+        self.team_home = team_home
+        self.team_away = team_away
+        self.handicap = handicap
+        self.home_win = home_win
+        self.away_win = away_win
+        self.draw = draw
+        self.time = time
+
+    def get_teams(self):
+        teams = [self.team_home, self.team_away]
+        return teams
+
+    def __repr__(self):
+        return '<Match league="{}" team_home="{}" team_away="{}" handicap="{}" home_win="{}" away_win="{}" draw="{}" time="{}">'.format(self.league, self.team_home, self.team_away, self.handicap, self.home_win, self.away_win, self.draw, self.time)
 
 class TotalResult(object):
     pass
