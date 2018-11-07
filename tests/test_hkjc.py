@@ -12,4 +12,6 @@ class Test(unittest.TestCase):
         result = self.inst.get_sports()
         print(result)
 
-
+    def test_get_handicap_sports(self):
+        result = self.inst.get_handicap_sports()
+        print(result)

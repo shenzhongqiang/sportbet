@@ -12,7 +12,8 @@ class Test(unittest.TestCase):
         result = self.inst.get_dates()
 
     def test_get_games(self):
-        result = self.inst.get_games("2018-11-05")
+        result = self.inst.get_games("2018-11-08")
+        print(result)
 
     def test_get_teams(self):
         teams = self.inst.get_teams()

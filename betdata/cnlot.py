@@ -3,6 +3,7 @@ import datetime
 import requests
 import lxml.html
 from lib.event_result import Match
+import lib.team_name
 
 class Feed(object):
     def __init__(self):
@@ -39,6 +40,8 @@ class Feed(object):
             dt = datetime.datetime.strptime(datetime_str, "%Y-%m-%d %H:%M")
             team_home = td_nodes[3].text
             team_away = td_nodes[4].text
+            team_home_en = lib.team_name.cnzh2en(team_home)
+            team_away_en = lib.team_name.cnzh2en(team_away)
             home_win_text = td_nodes[5].xpath('./strong')[0].text
             draw_text = td_nodes[6].xpath('./strong')[0].text
             away_win_text = td_nodes[7].xpath('./strong')[0].text
@@ -47,7 +50,7 @@ class Feed(object):
                 home_win = float(home_win_text)
                 draw = float(draw_text)
                 away_win = float(away_win_text)
-                match = Match(league=league, team_home=team_home, team_away=team_away,
+                match = Match(league=league, team_home=team_home_en, team_away=team_away_en,
                     handicap="0", home_win=home_win, away_win=away_win, draw=draw, time=dt)
                 result.append(match)
 
@@ -60,7 +63,7 @@ class Feed(object):
                 home_win = float(home_win_text)
                 draw = float(draw_text)
                 away_win = float(away_win_text)
-                match = Match(league=league, team_home=team_home, team_away=team_away,
+                match = Match(league=league, team_home=team_home_en, team_away=team_away_en,
                     handicap=handicap, home_win=home_win, away_win=away_win, draw=draw, time=dt)
                 result.append(match)
         return result

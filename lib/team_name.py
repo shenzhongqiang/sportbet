@@ -1,4 +1,4 @@
-team_names = [
+TEAMS = [
 {'cn_zh': '福冈黄蜂'},
 {'cn_zh': '町田泽维亚'},
 {'cn_zh': '山形山神'},
@@ -167,7 +167,7 @@ team_names = [
 {'cn_zh': '斯蒂文尼奇'},
 {'cn_zh': '克雷塔罗'},
 {'cn_zh': '韩国U23'},
-{'cn_zh': '迪德朗日'},
+{'cn_zh': '迪德朗日', 'cn_tw': '杜迪蘭治', 'en': 'Dudelange'},
 {'cn_zh': '佩鲁贾'},
 {'cn_zh': '斯洛文尼亚U21'},
 {'cn_zh': '桑德兰'},
@@ -191,7 +191,7 @@ team_names = [
 {'cn_zh': '巴拿马城金牛'},
 {'cn_zh': '朝鲜女足'},
 {'cn_zh': '日本'},
-{'cn_zh': '皇家贝蒂斯'},
+{'cn_zh': '皇家贝蒂斯', 'cn_tw': '貝迪斯', 'en': 'Betis'},
 {'cn_zh': '维罗纳'},
 {'cn_zh': '乌兹别克斯坦'},
 {'cn_zh': '马德拉'},
@@ -218,7 +218,7 @@ team_names = [
 {'cn_zh': '罗瑟汉姆'},
 {'cn_zh': '美洲太阳'},
 {'cn_zh': '京都不死鸟'},
-{'cn_zh': '卡拉巴赫'},
+{'cn_zh': '卡拉巴赫', 'cn_tw': '卡拉巴克', 'en': 'Qarabag'},
 {'cn_zh': '甘冈'},
 {'cn_zh': '奥林匹奥'},
 {'cn_zh': '南锡'},
@@ -291,7 +291,7 @@ team_names = [
 {'cn_zh': '沃特福德'},
 {'cn_zh': '瓦朗谢纳'},
 {'cn_zh': '松本山雅'},
-{'cn_zh': '特尔纳瓦斯巴达'},
+{'cn_zh': '特尔纳瓦斯巴达', 'cn_tw': '泰拿華斯巴達', 'en': 'Spartak Trnava'},
 {'cn_zh': '爱沙尼亚'},
 {'cn_zh': '玻利瓦尔'},
 {'cn_zh': '维尔赖克'},
@@ -324,7 +324,7 @@ team_names = [
 {'cn_zh': '兵工厂'},
 {'cn_zh': '科克城'},
 {'cn_zh': '亚松森国民'},
-{'cn_zh': '奥林匹亚科斯'},
+{'cn_zh': '奥林匹亚科斯', 'cn_tw': '奧林比亞高斯', 'en': 'Olympiakos'},
 {'cn_zh': '色格拉布鲁日'},
 {'cn_zh': '莱里达'},
 {'cn_zh': '布鲁日'},
@@ -493,7 +493,7 @@ team_names = [
 {'cn_zh': '格罗宁根'},
 {'cn_zh': '俄罗斯U21'},
 {'cn_zh': '圣格拉蒂安'},
-{'cn_zh': '阿森纳'},
+{'cn_zh': '阿森纳', 'cn_tw': '阿仙奴', 'en': 'Arsenal'},
 {'cn_zh': '奥地利U21'},
 {'cn_zh': '阿布扎比贾兹拉'},
 {'cn_zh': '塞图巴尔'},
@@ -540,7 +540,7 @@ team_names = [
 {'cn_zh': '凯泽斯劳滕'},
 {'cn_zh': '巴黎FC'},
 {'cn_zh': '埃瓦尔'},
-{'cn_zh': 'AC米兰'},
+{'cn_zh': 'AC米兰', 'cn_tw': 'AC米蘭', 'en': 'AC Milan'},
 {'cn_zh': '东京FC'},
 {'cn_zh': '伊泽尔'},
 {'cn_zh': '坦皮科'},
@@ -562,7 +562,7 @@ team_names = [
 {'cn_zh': '亚特兰特'},
 {'cn_zh': '科特赖克'},
 {'cn_zh': '赫塔费'},
-{'cn_zh': '圣菲独立'},
+{'cn_zh': '圣菲独立', 'cn_tw': '聖達菲', 'en': 'Independiente Santa Fe'},
 {'cn_zh': '清莱联'},
 {'cn_zh': '弗赖堡'},
 {'cn_zh': '斯旺西'},
@@ -618,7 +618,7 @@ team_names = [
 {'cn_zh': '卡利'},
 {'cn_zh': '威尔士U21'},
 {'cn_zh': '阿尔比恩流浪'},
-{'cn_zh': '里斯本竞技'},
+{'cn_zh': '里斯本竞技', 'cn_tw': '士砵亭', 'en': 'Sporting'},
 {'cn_zh': '伊基克体育'},
 {'cn_zh': '普埃布拉大学'},
 {'cn_zh': '比利时U21'},
@@ -655,7 +655,7 @@ team_names = [
 {'cn_zh': '埃克塞特城'},
 {'cn_zh': '新西兰'},
 {'cn_zh': '卡利亚里'},
-{'cn_zh': '西雅图海湾人'},
+{'cn_zh': '西雅图海湾人', 'cn_tw': '西雅圖海灣者', 'en': 'Seattle Sounders'},
 {'cn_zh': '新泻天鹅'},
 {'cn_zh': '越南U23'},
 {'cn_zh': '磐田喜悦'},
@@ -823,7 +823,7 @@ team_names = [
 {'cn_zh': '谢里夫'},
 {'cn_zh': '米拉索尔'},
 {'cn_zh': '卡塔尔'},
-{'cn_zh': '波特兰伐木工'},
+{'cn_zh': '波特兰伐木工', 'cn_tw': '波特蘭伐木者', 'en': 'Portland Timbers'},
 {'cn_zh': '蒙得维的亚国民'},
 {'cn_zh': '阿尔梅勒城'},
 {'cn_zh': '湘南海洋'},
@@ -831,9 +831,9 @@ team_names = [
 {'cn_zh': '圣约翰斯通'},
 {'cn_zh': '中华台北女足'},
 {'cn_zh': '波代诺内'},
-{'cn_zh': '萨格勒布迪纳摩'},
+{'cn_zh': '萨格勒布迪纳摩', 'cn_tw': '薩格勒布戴拿模', 'en': 'Dinamo Zagreb'},
 {'cn_zh': '哥伦布机员'},
-{'cn_zh': '波尔塔瓦沃斯卡拉'},
+{'cn_zh': '波尔塔瓦沃斯卡拉', 'cn_tw': '禾斯克拉', 'en': 'Vorskla Poltava'},
 {'cn_zh': '基尔'},
 {'cn_zh': '叙利亚'},
 {'cn_zh': '科罗拉多急流'},
@@ -882,7 +882,7 @@ team_names = [
 {'cn_zh': '大邱FC'},
 {'cn_zh': '戈塔维京人'},
 {'cn_zh': '大分三神'},
-{'cn_zh': '巴兰基亚青年'},
+{'cn_zh': '巴兰基亚青年', 'cn_tw': '青年體育會', 'en': 'Atletico Junior'},
 {'cn_zh': '图尔'},
 {'cn_zh': '科特迪瓦'},
 {'cn_zh': '兰斯'},
@@ -949,3 +949,20 @@ team_names = [
 {'cn_zh': '特拉维夫马卡比'},
 {'cn_zh': '桑德豪森'}
 ]
+
+CNZH_EN_MAPPING = {}
+CNTW_EN_MAPPING = {}
+
+def cnzh2en(cnzh):
+    if not CNZH_EN_MAPPING:
+        for team in TEAMS:
+            if "cn_zh" in team and "en" in team:
+                cnzh_name = team["cn_zh"].strip()
+                en_name = team["en"].strip()
+                CNZH_EN_MAPPING[cnzh_name] = en_name
+
+    if cnzh not in CNZH_EN_MAPPING:
+        msg = "no en name for {}".format(cnzh)
+        raise Exception(msg)
+
+    return CNZH_EN_MAPPING[cnzh]
