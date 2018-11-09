@@ -33,7 +33,8 @@ class EventResult(object):
         return '<EventResult league="{}" time="{}" teams={} odds={}>'.format(self.league, self.time, str_teams, str_odds)
 
 class Match(object):
-    def __init__(self, league, team_home, team_away, handicap, home_win, away_win, draw, time):
+    def __init__(self, source, league, team_home, team_away, handicap, home_win, away_win, draw, time):
+        self.source = source
         self.league = league
         self.team_home = team_home
         self.team_away = team_away
@@ -50,5 +51,57 @@ class Match(object):
     def __repr__(self):
         return '<Match league="{}" team_home="{}" team_away="{}" handicap="{}" home_win="{}" away_win="{}" draw="{}" time="{}">'.format(self.league, self.team_home, self.team_away, self.handicap, self.home_win, self.away_win, self.draw, self.time)
 
-class TotalResult(object):
-    pass
+    def __eq__(self, other):
+        if self.team_home != other.team_home:
+            return False
+        if self.team_away != other.team_away:
+            return False
+        if self.handicap != other.handicap:
+            return False
+        if self.time != other.time:
+            return False
+        return True
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def __lt__(self, other):
+        if self.time != other.time:
+            return self.time < other.time
+
+        if self.team_home != other.team_home:
+            return self.team_home < other.team_home
+
+        if self.team_away != other.team_away:
+            return self.team_away < other.team_away
+
+        if self.handicap != other.handicap:
+            return self.handicap < other.handicap
+
+        return False
+
+    def __le__(self, other):
+        if self.__eq__(other):
+            return True
+        if self.__lt__(other):
+            return True
+        return False
+
+    def __gt__(self, other):
+        return not self.__le__(other)
+
+    def __ge__(self, other):
+        return not self.__lt__(other)
+
+    def to_dict(self):
+        return {
+            "source": self.source,
+            "league": self.league,
+            "team_home": self.team_home,
+            "team_away": self.team_away,
+            "handicap": self.handicap,
+            "home_win": self.home_win,
+            "away_win": self.away_win,
+            "draw": self.draw,
+            "time": self.time
+        }

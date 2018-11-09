@@ -7,7 +7,7 @@ import lib.team_name
 
 class Feed(object):
     def __init__(self):
-        pass
+        self.source = "cnlot"
 
     def get_dates(self):
         url = "http://www.lottery.gov.cn/football/counter.jspx"
@@ -50,7 +50,7 @@ class Feed(object):
                 home_win = float(home_win_text)
                 draw = float(draw_text)
                 away_win = float(away_win_text)
-                match = Match(league=league, team_home=team_home_en, team_away=team_away_en,
+                match = Match(source=self.source, league=league, team_home=team_home_en, team_away=team_away_en,
                     handicap="0", home_win=home_win, away_win=away_win, draw=draw, time=dt)
                 result.append(match)
 
@@ -63,7 +63,7 @@ class Feed(object):
                 home_win = float(home_win_text)
                 draw = float(draw_text)
                 away_win = float(away_win_text)
-                match = Match(league=league, team_home=team_home_en, team_away=team_away_en,
+                match = Match(source=self.source, league=league, team_home=team_home_en, team_away=team_away_en,
                     handicap=handicap, home_win=home_win, away_win=away_win, draw=draw, time=dt)
                 result.append(match)
         return result

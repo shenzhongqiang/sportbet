@@ -3,7 +3,7 @@ import re
 import json
 import base64
 import requests
-from event_result import EventResult, Match
+from lib.event_result import Match
 
 def moneyline2odds(num):
     if num < 0:
@@ -13,9 +13,9 @@ def moneyline2odds(num):
 
 class Feed(object):
     def __init__(self):
-        pass
+        self.source = "hkjc"
 
-    def get_sports(self):
+    def get_zerohad_sports(self):
         url = "https://bet.hkjc.com/football/getJSON.aspx?jsontype=index.aspx"
         headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36",
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
@@ -37,6 +37,9 @@ class Feed(object):
         events = json.loads(content)
         result = []
         for event in events:
+            match_status = event["matchStatus"]
+            if match_status != "Defined":
+                continue
             match_time = event["matchTime"].split("+")[0]
             dt = datetime.datetime.strptime(match_time, "%Y-%m-%dT%H:%M:%S")
             home_team = event["homeTeam"]["teamNameEN"]
@@ -52,8 +55,8 @@ class Feed(object):
                     away_win = float(v.split("@")[1])
                 elif k == "H":
                     home_win = float(v.split("@")[1])
-            match = Match(league=league, team_home=home_team, team_away=away_team,
-                handicap="0", home_win=home_win, away_win=away_win, draw=draw, time=match_time)
+            match = Match(source=self.source, league=league, team_home=home_team, team_away=away_team,
+                handicap="0", home_win=home_win, away_win=away_win, draw=draw, time=dt)
             result.append(match)
         return result
 
@@ -79,6 +82,9 @@ class Feed(object):
         events = list(filter(lambda x: x["name"] == "ActiveMatches", events))[0]["matches"]
         result = []
         for event in events:
+            match_status = event["matchStatus"]
+            if match_status != "Defined":
+                continue
             match_time = event["matchTime"].split("+")[0]
             dt = datetime.datetime.strptime(match_time, "%Y-%m-%dT%H:%M:%S")
             home_team = event["homeTeam"]["teamNameEN"]
@@ -99,7 +105,13 @@ class Feed(object):
             if int(handicap_hg) + int(handicap_ag) != 0:
                 msg = "handicap HG is {} and AG is {}".format(handicap_hg, handicap_ag)
                 raise Exception(msg)
-            match = Match(league=league, team_home=home_team, team_away=away_team,
-                handicap=handicap_hg, home_win=home_win, away_win=away_win, draw=draw, time=match_time)
+            match = Match(source=self.source, league=league, team_home=home_team, team_away=away_team,
+                handicap=handicap_hg, home_win=home_win, away_win=away_win, draw=draw, time=dt)
             result.append(match)
+        return result
+
+    def get_sports(self):
+        result = self.get_zerohad_sports()
+        had_matches = self.get_handicap_sports()
+        result.extend(had_matches)
         return result

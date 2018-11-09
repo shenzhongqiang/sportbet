@@ -3,7 +3,7 @@ import re
 import json
 import base64
 import requests
-from event_result import EventResult
+from lib.event_result import Match
 
 def moneyline2odds(num):
     if num < 0:

@@ -4,7 +4,7 @@ import json
 import base64
 import requests
 from lxml import etree
-from event_result import EventResult
+from event_result import Match
 
 class Feed(object):
     def __init__(self):
@@ -30,6 +30,8 @@ class Feed(object):
         result = []
         for game_node in game_nodes:
             team_a = game_node.attrib["vtm"]
+            if team_a == "Chelsea FC":
+                print(etree.tostring(game_node))
             team_b = game_node.attrib["htm"]
             gmdt = game_node.attrib["gmdt"]
             gmtm = game_node.attrib["gmtm"]
@@ -41,14 +43,11 @@ class Feed(object):
             if len(line_nodes) > 1:
                 print("need investigate - multiple lines for game between {} {}".format(team_a, team_b))
                 continue
-            er = EventResult(league_name)
-            er.set_time(dt)
             line_node = line_nodes[0]
             a_odds = line_node.attrib["voddst"]
             b_odds = line_node.attrib["hoddst"]
             draw_odds = line_node.attrib["vspoddst"]
-            er.add_odds(team_a, a_odds, False)
-            er.add_odds(team_b, b_odds, False)
-            er.add_odds("", draw_odds, True)
-            result.append(er)
+            match = Match(source="bookmaker", league=league_name, team_home=team_b, team_away=team_a,
+                handicap="0", home_win=b_odds, away_win=a_odds, draw=draw_odds, time=dt)
+            result.append(match)
         return result
