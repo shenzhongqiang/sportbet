@@ -3,14 +3,15 @@ import datetime
 import re
 import json
 import requests
-from event_result import EventResult
+from event_result import Match
+import lib.team_name
 
 
 class Feed(object):
     def __init__(self):
-        pass
+        self.source = "sporttery"
 
-    def get_sports(self):
+    def get_games(self):
         ts = int(time.time() * 1000)
         url = "http://i.sporttery.cn/odds_calculator/get_odds?i_format=json&i_callback=getData&poolcode[]=hhad&poolcode[]=had&_={}".format(ts)
         r = requests.get(url)
@@ -29,15 +30,20 @@ class Feed(object):
             league = v["l_cn"]
             home_team = v["h_cn"]
             away_team = v["a_cn"]
-            er = EventResult(league)
-            er.set_time(dt)
-            if "had" not in v:
-                continue
-            draw_odds = float(v["had"]["d"])
-            away_odds = float(v["had"]["a"])
-            home_odds = float(v["had"]["h"])
-            er.add_odds("", draw_odds, True)
-            er.add_odds(away_team, away_odds, False)
-            er.add_odds(home_team, home_odds, False)
-            result.append(er)
+            home_team_en = lib.team_name.cnzh2en(home_team)
+            away_team_en = lib.team_name.cnzh2en(away_team)
+            home_win = float(v["had"]["h"])
+            away_win = float(v["had"]["a"])
+            draw = float(v["had"]["d"])
+            match = Match(source=self.source, league=league, team_home=home_team_en, team_away=away_team_en,
+                handicap="0", home_win=home_win, away_win=away_win, draw=draw, time=dt)
+            result.append(match)
+            home_win = float(v["hhad"]["h"])
+            away_win = float(v["hhad"]["a"])
+            draw = float(v["hhad"]["d"])
+            handicap = v["hhad"]["fixedodds"]
+            match = Match(source=self.source, league=league, team_home=home_team_en, team_away=away_team_en,
+                handicap=handicap, home_win=home_win, away_win=away_win, draw=draw, time=dt)
+            result.append(match)
         return result
+
